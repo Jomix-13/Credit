@@ -126,12 +126,20 @@ const Calculations = () => {
           </div>
         </div>
         
-        <div className='calculations'>
-        <div className='debtratio'>
+        <div className='each-section'>
+        <div className='section-title'>
           Debt ratio
         </div>
-        <div className='linkSquare'>
-          Thinking
+        <div className='sub-section-title'>
+          result %
+        </div>
+        <div className='debts-section'>
+          Notes:
+          <div>
+            1
+            2
+            3
+          </div>
         </div>
       </div>
       </div>

@@ -4,7 +4,7 @@
   align-items: center;
   background-color:orange;
   overflow: hidden;
-  position: fixed;
+  position: sticky;
   bottom: 0;
 width: 100%;
 }
