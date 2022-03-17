@@ -37,8 +37,34 @@ const Calculations = () => {
   },[grossIncome,otherIncome])
 
   //-----------------------------------------------------
-  
-  const debtsField = <input type='text' placeholder='$' value = {debts} onChange={e=>setDebts(e.target.value)}/>
+  const [balance, setBalance] = useState();
+  const [monthlyPayment, setMonthlyPayment] = useState();
+  const [internetRate, setInternetRate] = useState();
+  const debtsTypes = ['','Mortgage', 'Rent', 'Credit Card', 'Car Loan', 'Student Loan', 'Personal Loan','Personal Line','Student Loan', 'HELOC' ,'Other'];
+  const [debtsType, setDebtsType] = useState([debtsTypes[0]]);
+  const debtsBalanceField = <input type='text' placeholder='Balance' value = {balance} onChange={e=>setBalance(e.target.value)}/>
+  const monthlyPaymentField = <input type='text' placeholder='Monthly payment' value = {monthlyPayment} onChange={e=>setMonthlyPayment(e.target.value)}/>
+  const internetRateField = <input type='text' placeholder='Interest Rate' value = {internetRate} onChange={e=>setInternetRate(e.target.value)}/>
+  const debtsTypeField = <select value={debtsType} onChange={e=>setDebtsType(e.target.value)}>
+    {debtsTypes.map((debtsType,index) => <option key={index} value={debtsType}>{debtsType}</option>)}
+    </select>
+
+  const [debtsList, setDebtsList] = useState([monthlyPaymentField]);
+  const addDebts = () => {
+    setDebtsList([...debtsList, monthlyPaymentField]);
+  }
+
+  const allDebts =() => {
+    let total = 0
+    for(let i = 0; i < debtsList.length; i++){
+      total += debtsList[i].props.value
+    }
+    return total
+  }
+
+  useEffect(()=>{
+    setDebts(allDebts());
+  },[debtsList])
 
   //-----------------------------------------------------
 
@@ -102,7 +128,7 @@ const Calculations = () => {
             <div className='side-section-title'>
               Total Debts
               <div className='section-title-value'>
-                ${debts.toFixed(2)}
+                {debts === undefined ? '$0.00' : '$' + debts}
               </div>
             </div>
           </div>
@@ -110,28 +136,20 @@ const Calculations = () => {
             <div className='sub-section-title'>
               Debt type
             </div>
-            <select>
-              <option value='rent'>Rent</option>
-              <option value='mortgage'>Mortgage</option>
-              <option value='HELOC'>Home Equity LOC</option>
-              <option value='credit card'>Credit Card</option>
-              <option value='car loan'>Car Loan / lease</option>
-              <option value='student loan'>personal Loan</option>
-              <option value='student loan'>personal Line Of Credit</option>
-              <option value='student loan'>Student Loan</option>
-              <option value='other'>Other</option>
-            </select>
             <div className='section-input'>
-              <input type='text' placeholder='Balance $'/>
+              {debtsTypeField}
             </div>
             <div className='section-input'>
-              <input type='text' placeholder='Minimum Payment $'/>
+              {debtsBalanceField}
             </div>
             <div className='section-input'>
-              <input type='text' placeholder='Interest Rate %'/>
+              {monthlyPaymentField}
+            </div>
+            <div className='section-input'>
+              {internetRateField}
             </div>
             <div className='section-button'>
-              <button>Add</button>
+              <button onClick={addDebts}>Add</button>
             </div>
           </div>
         </div>
