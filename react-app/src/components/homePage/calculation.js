@@ -1,79 +1,64 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
 
+import Income from './calculations/Income';
+import Debts from './calculations/debts';
+
 import './homepage.css'
 
 const Calculations = () => {
   
-  
-  const [income, setIncome] = useState(.001);
-  const [debts, setDebts] = useState(0);
-  const [expenses, setExpenses] = useState(0);
+  // Income Section
+  const [income, setIncome] = useState(0);
   const [grossIncome, setGrossIncome] = useState();
-  const [otherIncome, setOtherIncome] = useState();
 
-  const debtsRatio = (debts/income) * 100;
+  const [incomeCompValue, setIncomeCompValue] = useState([]);
+  const [tempOtherIncome,setTempOtherIncome] = useState([]);
 
-  const otherIncomeField = <input type='text' placeholder='$' value = {otherIncome} onChange={e=>setOtherIncome(e.target.value)}/>
-  const grossIncomeField = <input type='text' placeholder='$' value = {grossIncome} onChange={e=>setGrossIncome(e.target.value)}/>
-  const [otherIncomeList, setOtherIncomeList] = useState([otherIncomeField]);
-  console.log("🚀 ~ file: calculation.js ~ line 19 ~ Calculations ~ otherIncomeList", otherIncomeList)
+
   const addOtherIncome = () => {
-    setOtherIncomeList([...otherIncomeList, otherIncomeField]);
+    setTempOtherIncome([...tempOtherIncome,<Income incomeCompValue={incomeCompValue} setIncomeCompValue={setIncomeCompValue}/>])
   }
-
-  const allOtherIncome =() => {
-    let total = 0
-    for(let i = 0; i < otherIncomeList.length; i++){
-      total += otherIncomeList[i].props.value
-    }
-    return total
+  let sumOtherIncome = () => {
+    let sum = 0;
+    incomeCompValue.reduce((acc,curr)=>{
+      sum += parseInt(curr);
+      return sum;
+    },0)
+    return sum + parseInt(grossIncome);
   }
-
-  // let fun = addOtherIncome()
-  // console.log("🚀 ~ file: calculation.js ~ line 35 ~ Calculations ~ fun", fun)
+    
   useEffect(()=>{
-    setIncome(grossIncome);
-  },[grossIncome,otherIncome])
+      setIncome(sumOtherIncome())
+  },[grossIncome,incomeCompValue])
 
-  //-----------------------------------------------------
-  const [balance, setBalance] = useState();
-  const [monthlyPayment, setMonthlyPayment] = useState();
-  const [internetRate, setInternetRate] = useState();
-  const debtsTypes = ['','Mortgage', 'Rent', 'Credit Card', 'Car Loan', 'Student Loan', 'Personal Loan','Personal Line','Student Loan', 'HELOC' ,'Other'];
-  const [debtsType, setDebtsType] = useState([debtsTypes[0]]);
-  const debtsBalanceField = <input type='text' placeholder='Balance' value = {balance} onChange={e=>setBalance(e.target.value)}/>
-  const monthlyPaymentField = <input type='text' placeholder='Monthly payment' value = {monthlyPayment} onChange={e=>setMonthlyPayment(e.target.value)}/>
-  const internetRateField = <input type='text' placeholder='Interest Rate' value = {internetRate} onChange={e=>setInternetRate(e.target.value)}/>
-  const debtsTypeField = <select value={debtsType} onChange={e=>setDebtsType(e.target.value)}>
-    {debtsTypes.map((debtsType,index) => <option key={index} value={debtsType}>{debtsType}</option>)}
-    </select>
+    //-----------------------------------------------------
 
-  const [debtsList, setDebtsList] = useState([monthlyPaymentField]);
-  const addDebts = () => {
-    setDebtsList([...debtsList, monthlyPaymentField]);
-  }
-
-  const allDebts =() => {
-    let total = 0
-    for(let i = 0; i < debtsList.length; i++){
-      total += debtsList[i].props.value
-    }
-    return total
-  }
-
-  useEffect(()=>{
-    setDebts(allDebts());
-  },[debtsList])
-
-  //-----------------------------------------------------
-
-
-
-
-
-
+  // Debts Section
   
+  const [debts, setDebts] = useState(0);
+  const [tempDebts,setTempDebts] = useState([]);
+  const [debtsCompValue, setDebtsCompValue] = useState([]);
+
+  const addDebts = () => {
+    setTempDebts([...tempDebts,<Debts debtsCompValue={debtsCompValue} setDebtsCompValue={setDebtsCompValue}/>])
+  }
+  let sumDebts = () => {
+    let sum = 0;
+    debtsCompValue.reduce((acc,curr)=>{
+      sum += parseInt(curr);
+      return sum;
+    },0)
+    return sum;
+  }
+  useEffect(()=>{
+    setDebts(sumDebts())
+  },[debtsCompValue])
+
+  const debtsRatio = ((debts/income) * 100).toFixed(2);
+  //-----------------------------------------------------//
+  const [expenses, setExpenses] = useState(0);
+
 
 
 
@@ -89,7 +74,6 @@ const Calculations = () => {
               Total Income
               <div className='section-title-value'>
                 {income === undefined ? '$0.00' : '$' + income}
-                
               </div>
             </div>
           </div>
@@ -98,25 +82,16 @@ const Calculations = () => {
               Gross Income
             </div>
             <div className='income-input'>
-              {grossIncomeField}
+            <input
+                    type='number'
+                    placeholder='$'
+                    value = {grossIncome}
+                    onChange={e=>setGrossIncome(e.target.value)}
+                />
             </div>
           </div>
-          <div className='income-section'>
-            <div className='sub-section-title'>
-              Other Income
-            </div>
-            <div className='section-input'>
-                {otherIncomeList.map((item, index) => {
-                  return (
-                    <div key={index}>
-                      {item}
-                    </div>
-                  )
-                }
-                )}
-              <button onClick={addOtherIncome}>Add</button>
-            </div>
-          </div>
+          {tempOtherIncome}
+          <button onClick={addOtherIncome}>Add</button>
         </div>
 
 
@@ -132,26 +107,8 @@ const Calculations = () => {
               </div>
             </div>
           </div>
-          <div className='debts-section'>
-            <div className='sub-section-title'>
-              Debt type
-            </div>
-            <div className='section-input'>
-              {debtsTypeField}
-            </div>
-            <div className='section-input'>
-              {debtsBalanceField}
-            </div>
-            <div className='section-input'>
-              {monthlyPaymentField}
-            </div>
-            <div className='section-input'>
-              {internetRateField}
-            </div>
-            <div className='section-button'>
-              <button onClick={addDebts}>Add</button>
-            </div>
-          </div>
+          {tempDebts}
+          <button onClick={addDebts}>Add</button>
         </div>
 
 

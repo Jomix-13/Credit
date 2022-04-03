@@ -10,7 +10,7 @@ const Head = () => {
         <div className='flip-card'>
           <div className='flip-card-inner'>
             <div className='flip-card-front'>
-              <h1>calculate your debt ratio</h1>
+              calculate your debt ratio
             </div>
             <div className='flip-card-back'>
               <img src="logo.jpg" alt="profilePic" className= 'img'/>
@@ -24,7 +24,7 @@ const Head = () => {
         <div className='flip-card'>
           <div className='flip-card-inner'>
             <div className='flip-card-front'>
-              <h1>Set a plan to be debt free</h1>
+              Set a plan to be debt free
             </div>
             <div className='flip-card-back'>
               <img src="debt-free.jpg" alt="profilePic" className= 'img'/>
@@ -41,10 +41,10 @@ const Head = () => {
             </div>
             <div className='flip-card-back'>
               <img src="prof.jpg" alt="profilePic" className= 'img'/>
-              <p>My name is John Wanis</p>
-              <p>I have a bachelor's degree in Accounting abd Finance.</p>
-              <p>I am a former Licesenced personal banker.</p>
-              <p>I am a software developer.</p>
+                  <h1>My name is John Wanis</h1>
+                  <p>I have a bachelor's degree in Accounting abd Finance.</p>
+                  <p>I am a former Licesenced personal banker.</p>
+                  <p>I am a software developer.</p>
             </div>
           </div>  
         </div>

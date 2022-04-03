@@ -6,6 +6,7 @@ import NavBar from './components/navbar/index.js';
 import HomePage from './components/homePage';
 import FooterNav from './components/FooterNav';
 import { authenticate } from './store/session';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
