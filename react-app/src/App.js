@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-// import NavBar from './components/navbar';
-import NavBar from './components/navbar/index.js';
+import NavBar from './components/navbar';
 import HomePage from './components/homePage';
 import FooterNav from './components/FooterNav';
 import { authenticate } from './store/session';
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [loaded, setLoaded] = useState(false);

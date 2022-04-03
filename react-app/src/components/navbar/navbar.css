@@ -55,6 +55,7 @@
 .navbar {
   background-color:orange;
   overflow: hidden;
+  /* height: 45px; */
 }
 
 /* Style the links inside the navigation bar */
