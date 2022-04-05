@@ -11,7 +11,6 @@ const Debts = (prps) => {
   const debtsTypes = ['','Mortgage', 'Rent', 'Credit Card', 'Car Loan', 'Student Loan', 'Personal Loan','Personal Line','Student Loan', 'HELOC' ,'Other'];
   const [debtsType, setDebtsType] = useState([debtsTypes[0]]);
   
-
   const {debtsCompValue,setDebtsCompValue} = prps;
   useEffect(()=>{
     setDebtsCompValue([...debtsCompValue,monthlyPayment])

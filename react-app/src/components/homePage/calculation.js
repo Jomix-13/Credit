@@ -3,6 +3,8 @@ import { useState,useEffect } from 'react';
 
 import Income from './calculations/Income';
 import Debts from './calculations/debts';
+import MandatoryExpenses from './calculations/mandatoryExpenses';
+import FunExpenses from './calculations/funExpenses';
 
 import './homepage.css'
 
@@ -43,6 +45,7 @@ const Calculations = () => {
   const addDebts = () => {
     setTempDebts([...tempDebts,<Debts debtsCompValue={debtsCompValue} setDebtsCompValue={setDebtsCompValue}/>])
   }
+
   let sumDebts = () => {
     let sum = 0;
     debtsCompValue.reduce((acc,curr)=>{
@@ -56,8 +59,56 @@ const Calculations = () => {
   },[debtsCompValue])
 
   const debtsRatio = ((debts/income) * 100).toFixed(2);
-  //-----------------------------------------------------//
-  const [expenses, setExpenses] = useState(0);
+    
+  //-----------------------------------------------------
+
+  // Expenses Section
+
+
+  // Mandatory Expenses Section
+  const [expenses, setExpenses] = useState(0)
+
+  const [tempMandatoryExpenses,setTempMandatoryExpenses] = useState([]);
+  const [mandatoryExpenses, setMandatoryExpenses] = useState([]);
+
+  const addMandatoryExpense = () => {
+    setTempMandatoryExpenses([...tempMandatoryExpenses,<MandatoryExpenses mandatoryExpenses={mandatoryExpenses} setMandatoryExpenses={setMandatoryExpenses}/>])
+  }
+
+  let sumMandatoryExpenses = () => {
+    let sum = 0;
+    mandatoryExpenses.reduce((acc,curr)=>{
+      sum += parseInt(curr);
+      return sum;
+    },0)
+    return sum;
+  }
+
+  // Fun Expenses Section
+  const [tempFunExpenses,setTempFunExpenses] = useState([]);
+  const [funExpenses, setFunExpenses] = useState([]);
+
+  const addFunExpense = () => {
+    setTempFunExpenses([...tempFunExpenses,<FunExpenses funExpenses={funExpenses} setFunExpenses={setFunExpenses}/>])
+  }
+
+  let sumFunExpenses = () => {
+    let sum = 0;
+    funExpenses.reduce((acc,curr)=>{
+      sum += parseInt(curr);
+      return sum;
+    },0)
+    return sum;
+  }
+
+  console.log('Mandatory Expenses',mandatoryExpenses,sumMandatoryExpenses())
+  console.log('Fun Expenses',funExpenses,sumFunExpenses())
+  useEffect(()=>{
+    setExpenses(sumMandatoryExpenses() + sumFunExpenses())
+  },[mandatoryExpenses,sumFunExpenses])
+
+
+
 
 
 
@@ -67,8 +118,9 @@ const Calculations = () => {
       <div className='MiddlePart'>
         <div className='each-section'>
           <div className='top-section-title'>
+
             <div className='section-title'>
-              Income
+              Income Section
             </div>
             <div className='side-section-title'>
               Total Income
@@ -120,7 +172,7 @@ const Calculations = () => {
             <div className='side-section-title'>
               Total Monthley Expenses
               <div className='section-title-value'>
-                ${expenses.toFixed(2)}
+                {expenses === undefined ? '$0.00' : '$' + expenses}
               </div>
             </div>
           </div>
@@ -128,50 +180,21 @@ const Calculations = () => {
           </div>
           <div className='each-section'>
             <div className='sub-section-title'>
-              Mandatory
+              Mandatory Expenses
             </div>
-            <div className='debts-section'>
-              <div className='sub-section-title'>
-                Expensess type
-              </div>
-            <select>
-              <option value='food'>Food</option>
-              <option value='water & sewer'>Water & Sewer</option>
-              <option value='electricity'>Electricity</option>
-              <option value='gas'>gas</option>
-              <option value='phone'>Phone</option>
-              <option value='internet'>Internet</option>
-              <option value='cable'>Cable</option>
-              <option value='other'>Other</option>
-            </select>
-            <div className='section-input'>
-              <input type='text' placeholder='Monthly Avrage $'/>
-            </div>
+            {tempMandatoryExpenses}
+          </div>
             <div className='debts-button'>
-              <button>Add</button>
+              <button onClick={addMandatoryExpense}>Add</button>
             </div>
-          </div>
-          </div>
 
           <div className='each-section'>
             <div className='sub-section-title'>
-              For fun
+              Fun Expenses
             </div>
-            <div className='debts-section'>
-              <div className='sub-section-title'>
-                Expensess type
-              </div>
-            <select>
-              <option value='resturants'>Resturants</option>
-              <option value='outings'>Outings</option>
-              <option value='other'>Other</option>
-            </select>
-            <div className='section-input'>
-              <input type='text' placeholder='Monthly Avrage $'/>
-            </div>
+            {tempFunExpenses}
             <div className='section-button'>
-              <button>Add</button>
-            </div>
+              <button onClick={addFunExpense}>Add</button>
             </div>
           </div>
         </div>
