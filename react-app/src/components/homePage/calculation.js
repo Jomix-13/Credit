@@ -58,8 +58,25 @@ const Calculations = () => {
     setDebts(sumDebts())
   },[debtsCompValue])
 
-  const debtsRatio = ((debts/income) * 100).toFixed(2);
-    
+  // let debtsRatio = () => {
+  //   let ratio = 0;
+  //   if (income > 0 && debts > 0){
+  //     ratio = ((debts/income) * 100).toFixed(2);
+  //   }
+  //   console.log(ratio)
+  //   return ratio;
+  // }
+
+  let debtsRatio = () => {
+    let ratio = 0;
+    if (income > 0 && debts > 0){
+      ratio = ((debts/income) * 100).toFixed(2);
+    }
+    return ratio;
+  }
+  
+  
+  console.log(debtsRatio())
   //-----------------------------------------------------
 
   // Expenses Section
@@ -101,8 +118,6 @@ const Calculations = () => {
     return sum;
   }
 
-  console.log('Mandatory Expenses',mandatoryExpenses,sumMandatoryExpenses())
-  console.log('Fun Expenses',funExpenses,sumFunExpenses())
   useEffect(()=>{
     setExpenses(sumMandatoryExpenses() + sumFunExpenses())
   },[mandatoryExpenses,sumFunExpenses])
@@ -204,14 +219,20 @@ const Calculations = () => {
           Debt ratio
         </div>
         <div className='sub-section-title'>
-          {debtsRatio}%
+          {debtsRatio} %
         </div>
-        <div className='debts-section'>
-          Notes:
+        <div className='notes-section'>
           <div>
-            1
-            2
-            3
+          Notes:
+          </div>
+          <div>
+          1
+          </div>
+          <div>
+          2
+          </div>
+          <div>
+          3
           </div>
         </div>
       </div>

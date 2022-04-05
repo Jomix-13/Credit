@@ -87,6 +87,12 @@
     justify-content: space-between;
     align-items: center;
 }
+.notes-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .top-section-title{
     display: grid;
