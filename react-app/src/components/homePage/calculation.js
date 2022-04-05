@@ -58,25 +58,18 @@ const Calculations = () => {
     setDebts(sumDebts())
   },[debtsCompValue])
 
-  // let debtsRatio = () => {
-  //   let ratio = 0;
-  //   if (income > 0 && debts > 0){
-  //     ratio = ((debts/income) * 100).toFixed(2);
-  //   }
-  //   console.log(ratio)
-  //   return ratio;
-  // }
 
-  let debtsRatio = () => {
-    let ratio = 0;
+
+  let debtsRatiofunc = () => {
+    let ratio = 0
     if (income > 0 && debts > 0){
-      ratio = ((debts/income) * 100).toFixed(2);
+      ratio = (debts/income) * 100;
     }
-    return ratio;
+    return ratio.toFixed(2);
   }
+
+  let debtsRatio = debtsRatiofunc();
   
-  
-  console.log(debtsRatio())
   //-----------------------------------------------------
 
   // Expenses Section

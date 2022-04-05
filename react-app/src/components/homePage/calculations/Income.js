@@ -13,7 +13,6 @@ const Income = (props) => {
         setOtherIncome(otherIncome);
         setIncomeCompValue([...incomeCompValue,otherIncome]);
     },[otherIncome])
-    console.log(otherIncome)
 
 
     return (
